@@ -8,7 +8,7 @@ minetest.register_node("mymineshaft:shaft_"..mat,{
 	light_source = 8,
 	climbable = true,
 	walkable = false,
-	groups = {cracky=2},
+	groups = {crumbly = 1,  cracky=1},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -72,7 +72,7 @@ minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_top_closed_"..mat,
-	groups = {cracky=2},
+	groups = {  cracky=1, crumbly = 1},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -111,7 +111,8 @@ minetest.register_node("mymineshaft:shaft_top_closed_"..mat,{
 	paramtype = "light",
 	climbable = true,
 	walkable = true,
-	groups = {cracky=2},
+	groups = {  cracky=1, crumbly = 1},
+	sounds = {footstep={name = "mymineshaft_step"}},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -155,7 +156,7 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	light_source = 8,
 	climbable = false,
 	walkable = true,
-	groups = {cracky=1, fall_damage_add_percent = -1000},
+	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -199,7 +200,7 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_bottom_"..mat,
-	groups = {cracky=2},
+	groups = {  cracky=1, crumbly = 1},
 	node_box = {
 		type = "fixed",
 		fixed = {
