@@ -3,34 +3,105 @@ local shape = {}
 local make_ok = {}
 local anzahl = {}
 
-minetest.register_node("mymineshaft:machine", {
-	description = "Mine Shaft Machine",
-	tiles = {"mymineshaft_sand.png"
+
+minetest.register_node("mymineshaft:machine_top", {
+--	description = "Mine Shaft Machine",
+	tiles = {
+		"mymineshaft_machine_top_top.png",
+		"mymineshaft_machine_top_bottom.png",
+		"mymineshaft_machine_top_right.png",
+		"mymineshaft_machine_top_left.png",
+		"mymineshaft_machine_top_back.png",
+		"mymineshaft_machine_top_front.png"
 		},
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
+	drop = "mymineshaft:machine",
 	groups = {cracky=2},
 	node_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5}, -- NodeBox1
-			{0.375, -0.5, -0.5, 0.5, 0.5, -0.375}, -- NodeBox2
-			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.375}, -- NodeBox3
-			{-0.5, -0.5, -0.5, 0.5, 0.0625, 0.5}, -- NodeBox4
-			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5}, -- NodeBox5
-			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5}, -- NodeBox6
-			{-0.0625, 0.0625, -0.25, 0, 0.1875, 0.25}, -- NodeBox7
-			{-0.0625, 0.0625, -0.125, 0, 0.25, 0.125}, -- NodeBox8
+			{-0.0625, -0.5, -0.0625, 0.0625, -0.4375, 0.0625}, 
+			{-0.125, -0.4375, -0.0625, 0.125, -0.375, 0.0625}, 
+			{-0.1875, -0.375, -0.0625, 0.1875, -0.3125, 0.0625}, 
+			{-0.25, -0.3125, -0.0625, 0.25, -0.0625, 0.0625}, 
+			{-0.0625, -0.4375, -0.125, 0.0625, -0.375, 0.125}, 
+			{-0.0625, -0.375, -0.1875, 0.0625, -0.3125, 0.1875},
+			{-0.0625, -0.3125, -0.25, 0.0625, -0.0625, 0.25}, 
+			{-0.0625, -0.0625, -0.0625, 0.0625, 0.125, 0.0625}, 
+			{-0.125, 0.125, -0.125, 0.125, 0.4375, 0.125},
+			{-0.5, -0.5, 0.375, -0.3125, 0.5, 0.5}, 
+			{0.3125, -0.5, 0.375, 0.5, 0.5, 0.5}, 
+			{-0.5, 0.375, 0.125, -0.375, 0.5, 0.375}, 
+			{0.375, 0.375, 0.125, 0.5, 0.5, 0.375}, 
+			{-0.375, 0.375, 0.125, 0.375, 0.5, 0.1875}, 
+			{-0.0625, 0.4375, -0.0625, 0.0625, 0.5, 0.125}, 
+		}
+	},
+	after_destruct = function(pos, oldnode)
+		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
+	end,
+})
+
+minetest.register_node("mymineshaft:machine", {
+	description = "Mine Shaft Machine",
+	tiles = {
+		"mymineshaft_machine_bottom_top.png",
+		"mymineshaft_machine_bottom_bottom.png",
+		"mymineshaft_machine_bottom_right.png",
+		"mymineshaft_machine_bottom_left.png",
+		"mymineshaft_machine_bottom_front.png",
+		"mymineshaft_machine_bottom_front.png"
+		},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	inventory_image = "mymineshaft_mach_inv.png",
+	groups = {cracky=2},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, -0.375, 0.5}, 
+			{-0.1875, -0.375, -0.4375, 0.1875, 0, 0.4375}, 
+			{-0.25, -0.375, -0.375, 0.25, 0, 0.375},
+			{-0.3125, -0.375, -0.3125, 0.3125, 0, 0.3125}, 
+			{-0.375, -0.375, -0.25, 0.375, 0, 0.25},
+			{-0.4375, -0.375, -0.1875, 0.4375, 0, 0.1875}, 
+			{-0.5, -0.375, 0.375, -0.3125, 0.5, 0.5}, 
+			{0.3125, -0.375, 0.375, 0.5, 0.5, 0.5}, 
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 1.5, 0.5},
 		}
 	},
 
+    on_place = function(itemstack, placer, pointed_thing)
+        local pos = pointed_thing.above
+        if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
+            minetest.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
+            return
+        end
+        return minetest.item_place(itemstack, placer, pointed_thing)
+    end,
+
+	after_destruct = function(pos, oldnode)
+		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+	end,
+
 	after_place_node = function(pos, placer)
+		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:machine_top", param2=minetest.dir_to_facedir(placer:get_look_dir())});
+
 	local meta = minetest.env:get_meta(pos);
 			meta:set_string("owner",  (placer:get_player_name() or ""));
-			meta:set_string("infotext",  "Mine Shaft Machine is empty (owned by " .. (placer:get_player_name() or "") .. ")");
+			meta:set_string("infotext",  "Mine Shaft Machine (owned by " .. (placer:get_player_name() or "") .. ")");
 		end,
-
+	after_destruct = function(pos, oldnode)
+		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+	end,
 can_dig = function(pos,player)
 	local meta = minetest.env:get_meta(pos);
 	local inv = meta:get_inventory()
