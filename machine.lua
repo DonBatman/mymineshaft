@@ -8,7 +8,7 @@ minetest.register_node("mymineshaft:machine_top", {
 --	description = "Mine Shaft Machine",
 	tiles = {
 		"mymineshaft_machine_top_top.png",
-		"mymineshaft_machine_top_bottom.png",
+		"mymineshaft_machine_top_bottom.png^[transformR180",
 		"mymineshaft_machine_top_right.png",
 		"mymineshaft_machine_top_left.png",
 		"mymineshaft_machine_top_back.png",
