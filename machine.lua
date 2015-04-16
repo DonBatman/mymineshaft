@@ -17,8 +17,8 @@ minetest.register_node("mymineshaft:machine_top", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	sunlight_propogates = true,
 	drop = "mymineshaft:machine",
+	sunlight_propogates = true,
 	groups = {cracky=2},
 	node_box = {
 		type = "fixed",
@@ -126,6 +126,8 @@ on_construct = function(pos)
 --		Column 1
 		"label[1,0.5;Shaft]"..
 		"image_button[1,1;1,1;mymineshaft_mach1.png;shaft; ]"..
+		"label[1,2;Middle]"..
+		"image_button[1,2.5;1,1;mymineshaft_mach3.png;middle; ]"..
 --		Column 2
 		"label[2.5,0.5;Top]"..
 		"image_button[2.5,1;1,1;mymineshaft_mach2.png;top2; ]"..
@@ -145,6 +147,7 @@ on_receive_fields = function(pos, formname, fields, sender)
 if fields["shaft"] 
 or fields["top2"] 
 or fields["bottom"]
+or fields["middle"]
 then
 
 	if fields["shaft"] then
@@ -173,25 +176,17 @@ then
 			return
 		end
 	end
---[[
-	if fields["crossi"] then
+
+	if fields["middle"] then
 		make_ok = "0"
 		anzahl = "1"
-		shape = "mymineshaft:cross_iron_"
+		shape = "mymineshaft:shaft_middle_"
 		if inv:is_empty("ingot") then
 			return
 		end
 	end
 
-	if fields["o"] then
-		make_ok = "0"
-		anzahl = "1"
-		shape = "mymineshaft:o_"
-		if inv:is_empty("ingot") then
-			return
-		end
-	end
---]]
+
 
 		local ingotstack = inv:get_stack("ingot", 1)
 		local resstack = inv:get_stack("res", 1)

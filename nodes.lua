@@ -224,6 +224,115 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	end
 })
 
+minetest.register_node("mymineshaft:shaft_middle_"..mat,{
+--	description = desc.." Shaft Middle",
+	tiles = {image},
+	drawtype = "nodebox",
+	paramtype = "light",
+	light_source = 8,
+	climbable = true,
+	walkable = false,
+	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, 0.375, -0.25, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.25, -0.375, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.3125, -0.3125, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.25, 0.5, -0.375}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.25}, 
+			{-0.5, -0.5, -0.5, -0.3125, 0.5, -0.3125}, 
+			{0.375, -0.5, 0.25, 0.5, 0.5, 0.5}, 
+			{0.25, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{0.3125, -0.5, 0.3125, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.25}, 
+			{0.25, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{0.3125, -0.5, -0.5, 0.5, 0.5, -0.3125},   
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, 0.375, -0.25, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.25, -0.375, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.3125, -0.3125, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.25, 0.5, -0.375}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.25}, 
+			{-0.5, -0.5, -0.5, -0.3125, 0.5, -0.3125}, 
+			{0.375, -0.5, 0.25, 0.5, 0.5, 0.5}, 
+			{0.25, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{0.3125, -0.5, 0.3125, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.25}, 
+			{0.25, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{0.3125, -0.5, -0.5, 0.5, 0.5, -0.3125}, 
+		}	
+	},
+
+    on_place = function(itemstack, placer, pointed_thing)
+        local pos = pointed_thing.above
+        if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
+            minetest.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
+            return
+        end
+        return minetest.item_place(itemstack, placer, pointed_thing)
+    end,
+
+	after_place_node = function(pos)
+		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:shaft_middle2_"..mat})
+	end,
+	after_destruct = function(pos, oldnode)
+		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+	end
+})
+
+minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
+--	description = desc.." Shaft Middle 2",
+	tiles = {image},
+	drawtype = "nodebox",
+	paramtype = "light",
+	light_source = 8,
+	climbable = true,
+	walkable = false,
+	drop = "mymineshaft:shaft_bottom_"..mat,
+	groups = {  cracky=1, crumbly = 1},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, 0.375, -0.25, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.25, -0.375, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.3125, -0.3125, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.25, 0.5, -0.375}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.25}, 
+			{-0.5, -0.5, -0.5, -0.3125, 0.5, -0.3125}, 
+			{0.375, -0.5, 0.25, 0.5, 0.5, 0.5}, 
+			{0.25, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{0.3125, -0.5, 0.3125, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.25}, 
+			{0.25, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{0.3125, -0.5, -0.5, 0.5, 0.5, -0.3125},  
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, 0.375, -0.25, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.25, -0.375, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.3125, -0.3125, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.25, 0.5, -0.375}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.25}, 
+			{-0.5, -0.5, -0.5, -0.3125, 0.5, -0.3125}, 
+			{0.375, -0.5, 0.25, 0.5, 0.5, 0.5}, 
+			{0.25, -0.5, 0.375, 0.5, 0.5, 0.5},
+			{0.3125, -0.5, 0.3125, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.25}, 
+			{0.25, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{0.3125, -0.5, -0.5, 0.5, 0.5, -0.3125},  
+		}	
+	},
+	after_destruct = function(pos, oldnode)
+		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
+	end
+})
 end
 
 
