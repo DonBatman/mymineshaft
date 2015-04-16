@@ -17,6 +17,7 @@ minetest.register_node("mymineshaft:machine_top", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
+	sunlight_propogates = true,
 	drop = "mymineshaft:machine",
 	groups = {cracky=2},
 	node_box = {
