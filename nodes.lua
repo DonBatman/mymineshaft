@@ -7,7 +7,7 @@ minetest.register_node("mymineshaft:shaft_"..mat,{
 	paramtype = "light",
 	light_source = 8,
 	climbable = true,
-	walkable = false,
+	walkable = true,
 	groups = {crumbly = 1,  cracky=1},
 	node_box = {
 		type = "fixed",
@@ -31,6 +31,15 @@ minetest.register_node("mymineshaft:shaft_"..mat,{
 		}
 	},
 	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
+			{0.4375, -0.5, -0.5, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, 
+		}	
+	},
+	collision_box = {
 		type = "fixed",
 		fixed = {
 			{-0.5, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
@@ -70,7 +79,7 @@ minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
 	drawtype = "nodebox",
 	paramtype = "light",
 	climbable = true,
-	walkable = false,
+	walkable = true,
 	drop = "mymineshaft:shaft_top_closed_"..mat,
 	groups = {  cracky=1, crumbly = 1},
 	node_box = {
@@ -97,7 +106,19 @@ minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5,-0.5,-0.5,0.5,0.5,0.5},
+			{-0.5, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
+			{0.4375, -0.5, -0.5, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, 
+		}	
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
+			{0.4375, -0.5, -0.5, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, 
 		}	
 	},
 	on_punch = function(pos, node, clicker)
@@ -170,8 +191,22 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5},
+			{-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.375}, 
+			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5}, 
 		}	
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, -0.4375}, 
+			{0.4375, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
+			{0.4375, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
+			{-0.5, -0.5, 0.4375, -0.4375, 0.5, 0.5}, 
+		}
 	},
 
     on_place = function(itemstack, placer, pointed_thing)
@@ -213,10 +248,19 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
-			{0.4375, -0.5, -0.5, 0.5, 0.5, 0.5}, 
-			{-0.5, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
-			{-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, 
+			{-0.5, -0.5, -0.5, -0.375, 0.5, -0.375}, 
+			{0.375, -0.5, 0.375, 0.5, 0.5, 0.5}, 
+			{0.375, -0.5, -0.5, 0.5, 0.5, -0.375}, 
+			{-0.5, -0.5, 0.375, -0.375, 0.5, 0.5}, 
+		}	
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, -0.4375}, 
+			{0.4375, -0.5, 0.4375, 0.5, 0.5, 0.5}, 
+			{0.4375, -0.5, -0.5, 0.5, 0.5, -0.4375}, 
+			{-0.5, -0.5, 0.4375, -0.4375, 0.5, 0.5},  
 		}	
 	},
 	after_destruct = function(pos, oldnode)
