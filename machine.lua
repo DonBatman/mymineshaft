@@ -122,17 +122,16 @@ on_construct = function(pos)
 		"list[current_name;res;5.5,3;1,1;]"..
 		"label[5.5,0.5;Input:]"..
 		"label[5.5,2.5;Output:]"..
-		"label[0,0;Choose Hole:]"..
 --		Column 1
 		"label[1,0.5;Shaft]"..
-		"image_button[1,1;1,1;mymineshaft_mach1.png;shaft; ]"..
+		"item_image_button[1,1;1,1;mymineshaft:shaft_default_clay;shaft; ]"..
 		"label[1,2;Middle]"..
-		"image_button[1,2.5;1,1;mymineshaft_mach3.png;middle; ]"..
+		"item_image_button[1,2.5;1,1;mymineshaft:shaft_middle_default_clay;middle; ]"..
 --		Column 2
 		"label[2.5,0.5;Top]"..
-		"image_button[2.5,1;1,1;mymineshaft_mach2.png;top2; ]"..
+		"item_image_button[2.5,1;1,1;mymineshaft:shaft_top_closed_default_clay;top2; ]"..
 		"label[2.5,2;Bottom]"..
-		"image_button[2.5,2.5;1,1;mymineshaft_mach3.png;bottom; ]"..
+		"item_image_button[2.5,2.5;1,1;mymineshaft:shaft_bottom_default_clay;bottom; ]"..
 		"list[current_player;main;0,5;8,4;]")
 	meta:set_string("infotext", "Brick Machine")
 	local inv = meta:get_inventory()
