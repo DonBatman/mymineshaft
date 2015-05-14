@@ -93,6 +93,7 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	mesh = "mymineshaft_bottom.obj",
 	paramtype = "light",
 	light_source = 8,
+	sunlight_propogates = true,
 	climbable = false,
 	walkable = true,
 	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
@@ -109,7 +110,8 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5}, 
+			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}, 
+
 			{-0.5, -0.5, 0.375, -0.375, 1.5, 0.5}, 
 			{0.375, -0.5, 0.375, 0.5, 1.5, 0.5}, 
 			{-0.5, -0.5, -0.5, -0.375, 1.5, -0.375}, 
@@ -119,7 +121,7 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	collision_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -0.3125, 0.5}, 
+			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}, 
 			{-0.5, -0.5, 0.375, -0.375, 1.5, 0.5}, 
 			{0.375, -0.5, 0.375, 0.5, 1.5, 0.5}, 
 			{-0.5, -0.5, -0.5, -0.375, 1.5, -0.375}, 
@@ -151,6 +153,7 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	mesh = "mymineshaft_middle.obj",
 	paramtype = "light",
 	light_source = 8,
+	sunlight_propogates = true,
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_bottom_"..mat,
@@ -178,6 +181,7 @@ minetest.register_node("mymineshaft:shaft_middle_"..mat,{
 	mesh = "mymineshaft_middle.obj",
 	paramtype = "light",
 	light_source = 8,
+	sunlight_propogates = true,
 	climbable = true,
 	walkable = false,
 	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
@@ -226,6 +230,7 @@ minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
 	mesh = "mymineshaft_middle.obj",
 	paramtype = "light",
 	light_source = 8,
+	sunlight_propogates = true,
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_bottom_"..mat,
