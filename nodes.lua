@@ -11,7 +11,7 @@ local cbox = {
 	}
 
 minetest.register_node("mymineshaft:shaft_"..mat,{
---	description = desc.." Shaft",
+	description = desc.." Shaft",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_shaft.obj",
@@ -19,37 +19,13 @@ minetest.register_node("mymineshaft:shaft_"..mat,{
 	light_source = 8,
 	climbable = true,
 	walkable = true,
-	groups = {crumbly = 1,  cracky=1},
+	groups = {crumbly = 1,  cracky=1, not_in_creative_inventory=1},
 
 	selection_box = cbox,
 	collision_box = cbox,
 })
-
-
-local function update_node(pos, node) 
-	minetest.set_node(pos, node)
-end
-
-local function punch(pos)
-	local meta = minetest.get_meta(pos)
-	local state = meta:get_int("state")
-	local me = minetest.get_node(pos)
-	local tmp_node
-	local tmp_node2
-	oben = {x=pos.x, y=pos.y, z=pos.z}
-		if state == 1 then
-			state = 0
-			tmp_node = {name="mymineshaft:shaft_top_open_"..mat, param1=me.param1, param2=me.param2}
-		else
-			state = 1
-			tmp_node = {name="mymineshaft:shaft_top_closed_"..mat, param1=me.param1, param2=me.param2}
-		end
-		update_node(pos, tmp_node)
-		meta:set_int("state", state)
-end
-
 minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
---	description = desc.."Open Shaft Top",
+	description = desc.."Open Shaft Top",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_shaft.obj",
@@ -57,22 +33,22 @@ minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
 	climbable = true,
 	walkable = true,
 	drop = "mymineshaft:shaft_top_closed_"..mat,
-	groups = {  cracky=1, crumbly = 1},
+	groups = {  cracky=1, crumbly = 1, not_in_creative_inventory=1},
 	selection_box = cbox,
 	collision_box = cbox,
 	on_punch = function(pos, node, clicker)
-		punch(pos)
+		minetest.set_node(pos,{name = "mymineshaft:shaft_top_closed_"..mat})
 	end,
 })
 minetest.register_node("mymineshaft:shaft_top_closed_"..mat,{
---	description = desc.." Closed Shaft Top",
+	description = desc.." Closed Shaft Top",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_shaftc.obj",
 	paramtype = "light",
 	climbable = true,
 	walkable = true,
-	groups = {  cracky=1, crumbly = 1},
+	groups = {  cracky=1, crumbly = 1, not_in_creative_inventory=1},
 	sounds = {footstep={name = "mymineshaft_step"}},
 	selection_box = {
 		type = "fixed",
@@ -82,12 +58,12 @@ minetest.register_node("mymineshaft:shaft_top_closed_"..mat,{
 	},
 
 	on_punch = function(pos, node, clicker)
-		punch(pos)
+		minetest.set_node(pos,{name = "mymineshaft:shaft_top_open_"..mat})
 	end,
 })
 
 minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
---	description = desc.." Shaft Bottom",
+	description = desc.." Shaft Bottom",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_bottom.obj",
@@ -96,7 +72,7 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 	sunlight_propogates = true,
 	climbable = false,
 	walkable = true,
-	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
+	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000, not_in_creative_inventory=1},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -147,7 +123,7 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 })
 
 minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
---	description = desc.." Shaft Bottom 2",
+	description = desc.." Shaft Bottom 2",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_middle.obj",
@@ -157,7 +133,7 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_bottom_"..mat,
-	groups = {  cracky=1, crumbly = 1},
+	groups = {  cracky=1, crumbly = 1, not_in_creative_inventory=1},
 
 	selection_box = {
 		type = "fixed",
@@ -175,7 +151,7 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 })
 
 minetest.register_node("mymineshaft:shaft_middle_"..mat,{
---	description = desc.." Shaft Middle",
+	description = desc.." Shaft Middle",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_middle.obj",
@@ -184,7 +160,7 @@ minetest.register_node("mymineshaft:shaft_middle_"..mat,{
 	sunlight_propogates = true,
 	climbable = true,
 	walkable = false,
-	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000},
+	groups = {crumbly = 1,  cracky=1, fall_damage_add_percent = -1000, not_in_creative_inventory=1},
 
 	selection_box = {
 		type = "fixed",
@@ -224,7 +200,7 @@ minetest.register_node("mymineshaft:shaft_middle_"..mat,{
 })
 
 minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
---	description = desc.." Shaft Middle 2",
+	description = desc.." Shaft Middle 2",
 	tiles = {image},
 	drawtype = "mesh",
 	mesh = "mymineshaft_middle.obj",
@@ -234,7 +210,7 @@ minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
 	climbable = true,
 	walkable = false,
 	drop = "mymineshaft:shaft_bottom_"..mat,
-	groups = {  cracky=1, crumbly = 1},
+	groups = {  cracky=1, crumbly = 1, not_in_creative_inventory=1},
 	selection_box = {
 		type = "fixed",
 		fixed = {

@@ -1,8 +1,21 @@
-local material = {}
-local shape = {}
-local make_ok = {}
-local anzahl = {}
-
+local material = a
+local shape = a
+local make_ok = false
+local anzahl = 0
+local mat_tab = {
+{"default:sandstone","default_sandstone"},
+{"default:clay","default_clay"},
+{"default:desert_stone","default_desert_stone"},
+{"default:cobble","default_cobble"},
+{"default:stone","default_stone"},
+{"default:wood","default_wood"},
+{"default:dirt","default_dirt"},
+{"default:desert_cobble","default_desert_cobble"},
+{"default:jungletree","default_jungletree"},
+{"default:junglewood","default_junglewood"},
+{"default:mossycobble","default_mossycobble"},
+{"default:tree","default_tree"},
+}
 
 minetest.register_node("mymineshaft:machine_top", {
 --	description = "Mine Shaft Machine",
@@ -41,7 +54,7 @@ minetest.register_node("mymineshaft:machine_top", {
 		}
 	},
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
+		minetest.remove_node({x = pos.x, y = pos.y - 1, z = pos.z})
 	end,
 })
 
@@ -90,7 +103,7 @@ minetest.register_node("mymineshaft:machine", {
     end,
 
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+		minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
 	end,
 
 	after_place_node = function(pos, placer)
@@ -106,17 +119,17 @@ minetest.register_node("mymineshaft:machine", {
 can_dig = function(pos,player)
 	local meta = minetest.env:get_meta(pos);
 	local inv = meta:get_inventory()
-	if not inv:is_empty("ingot") then
-		return false
-	elseif not inv:is_empty("res") then
-		return false
+	if inv:is_empty("ingot") and
+	   inv:is_empty("res") then
+		return true
+	else
+	return false
 	end
-	return true
 end,
 
 on_construct = function(pos)
 	local meta = minetest.env:get_meta(pos)
-	meta:set_string("formspec", "invsize[8,9;]"..
+	meta:set_string("formspec", "size[8,9;]"..
 		"background[-0.15,-0.25;8.40,9.75;mymineshaft_background.png]"..
 		"list[current_name;ingot;5.5,1;1,1;]"..
 		"list[current_name;res;5.5,3;1,1;]"..
@@ -150,8 +163,8 @@ or fields["middle"]
 then
 
 	if fields["shaft"] then
-		make_ok = "0"
-		anzahl = "1"
+		make_ok = false
+		anzahl = 1
 		shape = "mymineshaft:shaft_"
 		if inv:is_empty("ingot") then
 			return
@@ -159,8 +172,8 @@ then
 	end
 
 	if fields["top2"] then
-		make_ok = "0"
-		anzahl = "1"
+		make_ok = false
+		anzahl = 1
 		shape = "mymineshaft:shaft_top_closed_"
 		if inv:is_empty("ingot") then
 			return
@@ -168,8 +181,8 @@ then
 	end
 
 	if fields["bottom"] then
-		make_ok = "0"
-		anzahl = "1"
+		make_ok = false
+		anzahl = 1
 		shape = "mymineshaft:shaft_bottom_"
 		if inv:is_empty("ingot") then
 			return
@@ -177,8 +190,8 @@ then
 	end
 
 	if fields["middle"] then
-		make_ok = "0"
-		anzahl = "1"
+		make_ok = false
+		anzahl = 1
 		shape = "mymineshaft:shaft_middle_"
 		if inv:is_empty("ingot") then
 			return
@@ -192,78 +205,25 @@ then
 ----------------------------------------------------------------------------------
 --register nodes
 ----------------------------------------------------------------------------------
-		if ingotstack:get_name()=="default:sandstone" then
-				material = "default_sandstone"
-				make_ok = "1"
-		end
 
-		if ingotstack:get_name()=="default:clay" then
-				material = "default_clay"
-				make_ok = "1"
-		end
+for i in ipairs (mat_tab) do
+local this = mat_tab[i][1]
+local that = mat_tab[i][2]
 
-		if ingotstack:get_name()=="default:desert_stone" then
-				material = "default_desert_stone"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:cobble" then
-				material = "default_cobble"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:stone" then
-				material = "default_stone"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:wood" then
-				material = "default_wood"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:dirt" then
-				material = "default_dirt"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:desert_cobble" then
-				material = "default_desert_cobble"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:jungletree" then
-				material = "default_jungletree"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:junglewood" then
-				material = "default_junglewood"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:mossycobble" then
-				material = "default_mossycobble"
-				make_ok = "1"
-		end
-
-		if ingotstack:get_name()=="default:tree" then
-				material = "default_tree"
-				make_ok = "1"
+		if ingotstack:get_name()==this then
+				material = that
+				make_ok = true
 		end
 
 ----------------------------------------------------------------------
-		if make_ok == "1" then
-			local give = {}
-			for i = 0, anzahl-1 do
-				give[i+1]=inv:add_item("res",shape..material)
-			end
+		if make_ok == true then
+			inv:add_item("res",shape..material)
 			ingotstack:take_item()
 			inv:set_stack("ingot",1,ingotstack)
 		end            	
 end
 end
-
+end
 
 })
 
