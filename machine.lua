@@ -140,11 +140,13 @@ on_construct = function(pos)
 		"item_image_button[1,1;1,1;mymineshaft:shaft_default_clay;shaft; ]"..
 		"label[1,2;Middle]"..
 		"item_image_button[1,2.5;1,1;mymineshaft:shaft_middle_default_clay;middle; ]"..
+		"item_image_button[3.5,1;1,1;mymineshaft:shaft_newtop_default_clay;newshaft; ]"..
 --		Column 2
 		"label[2.5,0.5;Top]"..
 		"item_image_button[2.5,1;1,1;mymineshaft:shaft_top_closed_default_clay;top2; ]"..
 		"label[2.5,2;Bottom]"..
 		"item_image_button[2.5,2.5;1,1;mymineshaft:shaft_bottom_default_clay;bottom; ]"..
+		"item_image_button[3.5,2.5;1,1;mymineshaft:shaft_newtop_default_clay;newtop; ]"..
 		"list[current_player;main;0,5;8,4;]")
 	meta:set_string("infotext", "Brick Machine")
 	local inv = meta:get_inventory()
@@ -160,6 +162,8 @@ if fields["shaft"]
 or fields["top2"] 
 or fields["bottom"]
 or fields["middle"]
+or fields["newtop"]
+or fields["newshaft"]
 then
 
 	if fields["shaft"] then
@@ -193,6 +197,24 @@ then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_middle_"
+		if inv:is_empty("ingot") then
+			return
+		end
+	end
+
+	if fields["newtop"] then
+		make_ok = false
+		anzahl = 1
+		shape = "mymineshaft:shaft_newtop_"
+		if inv:is_empty("ingot") then
+			return
+		end
+	end
+
+	if fields["newshaft"] then
+		make_ok = false
+		anzahl = 1
+		shape = "mymineshaft:shaft_bigshaft_"
 		if inv:is_empty("ingot") then
 			return
 		end
