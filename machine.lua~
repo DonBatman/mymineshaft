@@ -1,5 +1,5 @@
-local material = nil
-local shape = nil
+local material = a
+local shape = a
 local make_ok = false
 local anzahl = 0
 local mat_tab = {
