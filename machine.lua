@@ -3,18 +3,26 @@ local shape = nil
 local make_ok = false
 local anzahl = 0
 local mat_tab = {
-					{"default:sandstone","default_sandstone"},
-					{"default:clay","default_clay"},
-					{"default:desert_stone","default_desert_stone"},
 					{"default:cobble","default_cobble"},
-					{"default:stone","default_stone"},
-					{"default:wood","default_wood"},
-					{"default:dirt","default_dirt"},
 					{"default:desert_cobble","default_desert_cobble"},
-					{"default:jungletree","default_jungletree"},
-					{"default:junglewood","default_junglewood"},
 					{"default:mossycobble","default_mossycobble"},
+					{"default:stone","default_stone"},
+					{"default:desert_stone","default_desert_stone"},
+					{"default:sandstone","default_sandstone"},
+					{"default:desert_sandstone","default_desert_sandstone"},
+					{"default:dirt","default_dirt"},
+					{"default:clay","default_clay"},
+					{"default:brick","default_brick"},
 					{"default:tree","default_tree"},
+					{"default:jungletree","default_jungletree"},
+					{"default:pine_tree","default_pine_tree"},
+					{"default:acacia_tree","default_acacia_tree"},
+					{"default:aspen_tree","default_aspen_tree"},
+					{"default:wood","default_wood"},
+					{"default:junglewood","default_junglewood"},
+					{"default:pine_wood","default_pine_wood"},
+					{"default:acacia_wood","default_acacia_wood"},
+					{"default:aspen_wood","default_aspen_wood"},
 				}
 
 minetest.register_node("mymineshaft:machine_top", {
@@ -175,36 +183,32 @@ then
 		if inv:is_empty("ingot") then
 			return
 		end
-	end
 
-	if fields["top"] then
+	elseif fields["top"] then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_top_closed_"
 		if inv:is_empty("ingot") then
 			return
 		end
-	end
 
-	if fields["bottom"] then
+	elseif fields["bottom"] then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_bottom_"
 		if inv:is_empty("ingot") then
 			return
 		end
-	end
 
-	if fields["middle"] then
+	elseif fields["middle"] then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_middle_"
 		if inv:is_empty("ingot") then
 			return
 		end
-	end
 
-	if fields["newshaft"] then
+	elseif fields["newshaft"] then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_bigshaft_"
@@ -249,3 +253,16 @@ minetest.register_craft({
 			{'default:sand', "default:brick", 'default:sand'},		
 		},
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
