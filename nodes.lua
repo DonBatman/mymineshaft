@@ -226,36 +226,6 @@ minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
 	end
 })
 
-minetest.register_node("mymineshaft:shaft_newtop_"..mat,{
-	description = desc.." Shaft Middle 2",
-	tiles = {image},
-	drawtype = "mesh",
-	mesh = "twobytop.obj",
-	visual_scale = 0.2,
-	paramtype = "light",
-	paramtype2 = "facedir",
-	light_source = 8,
-	sunlight_propogates = true,
-	climbable = true,
-	walkable = false,
-	drop = "mymineshaft:shaft_bottom_"..mat,
-	groups = {  cracky=1, crumbly = 1, not_in_creative_inventory=1},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5, -0.5, -0.5, 3.5, 5.5, 3.5},  
-		}	
-	},
-	collision_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5, -0.5, -0.5, 3.5, 5.5, 3.5},  
-		}	
-	},
-	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
-	end
-})
 minetest.register_node("mymineshaft:shaft_bigshaft_"..mat,{
 	description = desc.." Shaft Middle 2",
 	tiles = {image},
@@ -280,9 +250,3 @@ minetest.register_node("mymineshaft:shaft_bigshaft_"..mat,{
 	end
 })
 end
-
-
-
-
-
-		
