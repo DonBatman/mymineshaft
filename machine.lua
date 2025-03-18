@@ -3,22 +3,22 @@ local shape = nil
 local make_ok = false
 local anzahl = 0
 local mat_tab = {
-{"default:sandstone","default_sandstone"},
-{"default:clay","default_clay"},
-{"default:desert_stone","default_desert_stone"},
-{"default:cobble","default_cobble"},
-{"default:stone","default_stone"},
-{"default:wood","default_wood"},
-{"default:dirt","default_dirt"},
-{"default:desert_cobble","default_desert_cobble"},
-{"default:jungletree","default_jungletree"},
-{"default:junglewood","default_junglewood"},
-{"default:mossycobble","default_mossycobble"},
-{"default:tree","default_tree"},
-}
+					{"default:sandstone","default_sandstone"},
+					{"default:clay","default_clay"},
+					{"default:desert_stone","default_desert_stone"},
+					{"default:cobble","default_cobble"},
+					{"default:stone","default_stone"},
+					{"default:wood","default_wood"},
+					{"default:dirt","default_dirt"},
+					{"default:desert_cobble","default_desert_cobble"},
+					{"default:jungletree","default_jungletree"},
+					{"default:junglewood","default_junglewood"},
+					{"default:mossycobble","default_mossycobble"},
+					{"default:tree","default_tree"},
+				}
 
 minetest.register_node("mymineshaft:machine_top", {
---	description = "Mine Shaft Machine",
+--	description = "Mine Shaft Machine Top",
 	tiles = {
 		"mymineshaft_machine_top_top.png",
 		"mymineshaft_machine_top_bottom.png^[transformR180",
@@ -130,25 +130,28 @@ end,
 on_construct = function(pos)
 	local meta = minetest.get_meta(pos)
 	meta:set_string("formspec", "size[8,9;]"..
-		"background[-0.15,-0.25;8.40,9.75;mymineshaft_background.png]"..
+		"background[-0.15,-0.25;8.40,9.75;mymineshaft_background.png;]"..
 		"list[current_name;ingot;5.5,1;1,1;]"..
 		"list[current_name;res;5.5,3;1,1;]"..
 		"label[5.5,0.5;Input:]"..
 		"label[5.5,2.5;Output:]"..
 --		Column 1
 		"label[1,0.5;Shaft]"..
-		"item_image_button[1,1;1,1;mymineshaft:shaft_default_clay;shaft; ]"..
+		"image_button[1,1;1,1;mymineshaft_tunnel.png;shaft;]"..
 		"label[1,2;Middle]"..
-		"item_image_button[1,2.5;1,1;mymineshaft:shaft_middle_default_clay;middle; ]"..
-		"item_image_button[3.5,1;1,1;mymineshaft:shaft_newtop_default_clay;newshaft; ]"..
+		"image_button[1,2.5;1,1;mymineshaft_middle.png;middle;]"..
 --		Column 2
-		"label[2.5,0.5;Top]"..
-		"item_image_button[2.5,1;1,1;mymineshaft:shaft_top_closed_default_clay;top2; ]"..
-		"label[2.5,2;Bottom]"..
-		"item_image_button[2.5,2.5;1,1;mymineshaft:shaft_bottom_default_clay;bottom; ]"..
-		"item_image_button[3.5,2.5;1,1;mymineshaft:shaft_newtop_default_clay;newtop; ]"..
+		"label[2.5,0.5;Corner]"..
+		"image_button[2.5,1;1,1;mymineshaft_corner.png;newshaft;]"..
+		"label[2.5,2;Top]"..
+		"image_button[2.5,2.5;1,1;mymineshaft_tops.png;top;]"..
+--      Column 3
+		"label[4,0.5;Bottom]"..
+		"image_button[4,1;1,1;mymineshaft_bottom.png;bottom;]"..
+--      Player Inventory
 		"list[current_player;main;0,5;8,4;]")
-	meta:set_string("infotext", "Brick Machine")
+		
+	meta:set_string("infotext", "Mine Shaft Machine")
 	local inv = meta:get_inventory()
 	inv:set_size("ingot", 1)
 	inv:set_size("res", 1)
@@ -159,10 +162,9 @@ on_receive_fields = function(pos, formname, fields, sender)
 	local inv = meta:get_inventory()
 
 if fields["shaft"] 
-or fields["top2"] 
+or fields["top"] 
 or fields["bottom"]
 or fields["middle"]
-or fields["newtop"]
 or fields["newshaft"]
 then
 
@@ -175,7 +177,7 @@ then
 		end
 	end
 
-	if fields["top2"] then
+	if fields["top"] then
 		make_ok = false
 		anzahl = 1
 		shape = "mymineshaft:shaft_top_closed_"
@@ -202,15 +204,6 @@ then
 		end
 	end
 
-	if fields["newtop"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_newtop_"
-		if inv:is_empty("ingot") then
-			return
-		end
-	end
-
 	if fields["newshaft"] then
 		make_ok = false
 		anzahl = 1
@@ -219,9 +212,6 @@ then
 			return
 		end
 	end
-
-
-
 		local ingotstack = inv:get_stack("ingot", 1)
 		local resstack = inv:get_stack("res", 1)
 ----------------------------------------------------------------------------------
@@ -249,7 +239,7 @@ end
 
 })
 
---Craft
+--Craft Machine
 
 minetest.register_craft({
 		output = 'mymineshaft:machine',
@@ -259,16 +249,3 @@ minetest.register_craft({
 			{'default:sand', "default:brick", 'default:sand'},		
 		},
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
