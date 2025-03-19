@@ -13,7 +13,7 @@ local mat_tab = {
 		{"default:dirt","default_dirt"},
 		{"default:clay","default_clay"},
 		{"default:brick","default_brick"},
-		"default:tree","default_tree"},
+		{"default:tree","default_tree"},
 		{"default:jungletree","default_jungletree"},
 		{"default:pine_tree","default_pine_tree"},
 		{"default:acacia_tree","default_acacia_tree"},
@@ -23,7 +23,7 @@ local mat_tab = {
 		{"default:pine_wood","default_pine_wood"},
 		{"default:acacia_wood","default_acacia_wood"},
 		{"default:aspen_wood","default_aspen_wood"}
-	}
+		}
 
 minetest.register_node("mymineshaft:machine_top", {
 --	description = "Mine Shaft Machine Top",
