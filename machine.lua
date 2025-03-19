@@ -166,79 +166,43 @@ on_construct = function(pos)
 end,
 
 on_receive_fields = function(pos, formname, fields, sender)
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local ingot_stack = inv:get_stack("ingot", 1)
+    local res_stack = inv:get_stack("res", 1)
+    local shape = nil
+    local material = nil
 
-if fields["shaft"] 
-or fields["top"] 
-or fields["bottom"]
-or fields["middle"]
-or fields["newshaft"]
-then
+    if fields["shaft"] or fields["top"] or fields["bottom"] or fields["middle"] or fields["newshaft"] then
+        if fields["shaft"] then
+            shape = "mymineshaft:shaft_"
+        elseif fields["top"] then
+            shape = "mymineshaft:shaft_top_closed_"
+        elseif fields["bottom"] then
+            shape = "mymineshaft:shaft_bottom_"
+        elseif fields["middle"] then
+            shape = "mymineshaft:shaft_middle_"
+        elseif fields["newshaft"] then
+            shape = "mymineshaft:shaft_bigshaft_"
+        end
 
-	if fields["shaft"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_"
-		if inv:is_empty("ingot") then
-			return
-		end
+        if inv:is_empty("ingot") then
+            return
+        end
 
-	elseif fields["top"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_top_closed_"
-		if inv:is_empty("ingot") then
-			return
-		end
+        for _, mat_data in ipairs(mat_tab) do
+            if ingot_stack:get_name() == mat_data[1] then
+                material = mat_data[2]
+                break
+            end
+        end
 
-	elseif fields["bottom"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_bottom_"
-		if inv:is_empty("ingot") then
-			return
-		end
-
-	elseif fields["middle"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_middle_"
-		if inv:is_empty("ingot") then
-			return
-		end
-
-	elseif fields["newshaft"] then
-		make_ok = false
-		anzahl = 1
-		shape = "mymineshaft:shaft_bigshaft_"
-		if inv:is_empty("ingot") then
-			return
-		end
-	end
-		local ingotstack = inv:get_stack("ingot", 1)
-		local resstack = inv:get_stack("res", 1)
-----------------------------------------------------------------------------------
---register nodes
-----------------------------------------------------------------------------------
-
-for i in ipairs (mat_tab) do
-local this = mat_tab[i][1]
-local that = mat_tab[i][2]
-
-		if ingotstack:get_name()==this then
-				material = that
-				make_ok = true
-		end
-
-----------------------------------------------------------------------
-		if make_ok == true then
-			inv:add_item("res",shape..material)
-			ingotstack:take_item()
-			inv:set_stack("ingot",1,ingotstack)
-		end            	
-end
-end
+        if material then
+            inv:add_item("res", shape .. material)
+            ingot_stack:take_item()
+            inv:set_stack("ingot", 1, ingot_stack)
+        end
+    end
 end
 
 })
