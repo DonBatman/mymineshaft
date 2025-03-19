@@ -22,7 +22,7 @@ local mat_tab = {
 		{"default:junglewood","default_junglewood"},
 		{"default:pine_wood","default_pine_wood"},
 		{"default:acacia_wood","default_acacia_wood"},
-		{"default:aspen_wood","default_aspen_wood"},
+		{"default:aspen_wood","default_aspen_wood"}
 	}
 
 minetest.register_node("mymineshaft:machine_top", {
