@@ -1,0 +1,4 @@
+
+#Enable for mineshafts
+mymineshaft.use_mines(Enable to generate mineshafts) bool true
+
