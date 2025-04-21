@@ -21,7 +21,7 @@ minetest.register_node("mymineshaft:minenode",{
 	drawtype = "normal",
 	paramtype = "light",
 	light_source = 8,
-	groups = {cracky = 1},
+	groups = {cracky = 1, not_in_creative_inventory=1},
 })
 minetest.register_ore({
 	ore_type       = "scatter",
