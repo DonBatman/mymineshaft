@@ -8,6 +8,9 @@ if mines then
 dofile(minetest.get_modpath("mymineshaft").."/shafts.lua")
 end
 
+if minetest.get_modpath("myores") then
+dofile(minetest.get_modpath("mymineshaft").."/myores.lua")
+end
 
 
 
