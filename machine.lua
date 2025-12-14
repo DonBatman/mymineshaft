@@ -133,75 +133,17 @@ local mat_tab = {
 					{"myores:amethyst_tiles",        	"amethyst_tiles"},
 		}
 
-minetest.register_node("mymineshaft:machine_top", {
---	description = "Mine Shaft Machine Top",
-	tiles = {
-		"mymineshaft_machine_top_top.png",
-		"mymineshaft_machine_top_bottom.png^[transformR180",
-		"mymineshaft_machine_top_right.png",
-		"mymineshaft_machine_top_left.png",
-		"mymineshaft_machine_top_back.png",
-		"mymineshaft_machine_top_front.png"
-		},
-	drawtype = "nodebox",
-	paramtype = "light",
-	paramtype2 = "facedir",
-	drop = "mymineshaft:machine",
-	sunlight_propogates = true,
-	groups = {cracky=2},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.0625, -0.5, -0.0625, 0.0625, -0.4375, 0.0625}, 
-			{-0.125, -0.4375, -0.0625, 0.125, -0.375, 0.0625}, 
-			{-0.1875, -0.375, -0.0625, 0.1875, -0.3125, 0.0625}, 
-			{-0.25, -0.3125, -0.0625, 0.25, -0.0625, 0.0625}, 
-			{-0.0625, -0.4375, -0.125, 0.0625, -0.375, 0.125}, 
-			{-0.0625, -0.375, -0.1875, 0.0625, -0.3125, 0.1875},
-			{-0.0625, -0.3125, -0.25, 0.0625, -0.0625, 0.25}, 
-			{-0.0625, -0.0625, -0.0625, 0.0625, 0.125, 0.0625}, 
-			{-0.125, 0.125, -0.125, 0.125, 0.4375, 0.125},
-			{-0.5, -0.5, 0.375, -0.3125, 0.5, 0.5}, 
-			{0.3125, -0.5, 0.375, 0.5, 0.5, 0.5}, 
-			{-0.5, 0.375, 0.125, -0.375, 0.5, 0.375}, 
-			{0.375, 0.375, 0.125, 0.5, 0.5, 0.375}, 
-			{-0.375, 0.375, 0.125, 0.375, 0.5, 0.1875}, 
-			{-0.0625, 0.4375, -0.0625, 0.0625, 0.5, 0.125}, 
-		}
-	},
-	after_destruct = function(pos, oldnode)
-		minetest.remove_node({x = pos.x, y = pos.y - 1, z = pos.z})
-	end,
-})
-
-minetest.register_node("mymineshaft:machine", {
+core.register_node("mymineshaft:machine", {
 	description = "Mine Shaft Machine",
 	tiles = {
-		"mymineshaft_machine_bottom_top.png",
-		"mymineshaft_machine_bottom_bottom.png",
-		"mymineshaft_machine_bottom_right.png",
-		"mymineshaft_machine_bottom_left.png",
-		"mymineshaft_machine_bottom_front.png",
-		"mymineshaft_machine_bottom_front.png"
+		"mymineshaft_machine.png",
 		},
-	drawtype = "nodebox",
+	drawtype = "mesh",
+	mesh = "mymineshaft_machine.obj",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	inventory_image = "mymineshaft_mach_inv.png",
+--	inventory_image = "mymineshaft_mach_inv.png",
 	groups = {cracky=2},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5, -0.5, -0.5, 0.5, -0.375, 0.5}, 
-			{-0.1875, -0.375, -0.4375, 0.1875, 0, 0.4375}, 
-			{-0.25, -0.375, -0.375, 0.25, 0, 0.375},
-			{-0.3125, -0.375, -0.3125, 0.3125, 0, 0.3125}, 
-			{-0.375, -0.375, -0.25, 0.375, 0, 0.25},
-			{-0.4375, -0.375, -0.1875, 0.4375, 0, 0.1875}, 
-			{-0.5, -0.375, 0.375, -0.3125, 0.5, 0.5}, 
-			{0.3125, -0.375, 0.375, 0.5, 0.5, 0.5}, 
-		}
-	},
 	selection_box = {
 		type = "fixed",
 		fixed = {
@@ -211,29 +153,25 @@ minetest.register_node("mymineshaft:machine", {
 
     on_place = function(itemstack, placer, pointed_thing)
         local pos = pointed_thing.above
-        if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
-            minetest.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
+        if core.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
+            core.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
             return
         end
-        return minetest.item_place(itemstack, placer, pointed_thing)
+        return core.item_place(itemstack, placer, pointed_thing)
     end,
 
 	after_destruct = function(pos, oldnode)
-		minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
+		core.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
 	end,
 
 	after_place_node = function(pos, placer)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:machine_top", param2=minetest.dir_to_facedir(placer:get_look_dir())});
 
-	local meta = minetest.get_meta(pos);
+	local meta = core.get_meta(pos);
 			meta:set_string("owner",  (placer:get_player_name() or ""));
 			meta:set_string("infotext",  "Mine Shaft Machine (owned by " .. (placer:get_player_name() or "") .. ")");
 		end,
-	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
-	end,
 can_dig = function(pos,player)
-	local meta = minetest.get_meta(pos);
+	local meta = core.get_meta(pos);
 	local inv = meta:get_inventory()
 	if inv:is_empty("ingot") and
 	   inv:is_empty("res") then
@@ -244,7 +182,7 @@ can_dig = function(pos,player)
 end,
 
 on_construct = function(pos)
-	local meta = minetest.get_meta(pos)
+	local meta = core.get_meta(pos)
 	meta:set_string("formspec", "size[8,9;]"..
 		"background[-0.15,-0.25;8.40,9.75;mymineshaft_background.png;]"..
 		"list[current_name;ingot;5.5,1;1,1;]"..
@@ -274,7 +212,7 @@ on_construct = function(pos)
 end,
 
 on_receive_fields = function(pos, formname, fields, sender)
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local ingot_stack = inv:get_stack("ingot", 1)
     local res_stack = inv:get_stack("res", 1)
@@ -317,7 +255,7 @@ end
 
 --Craft Machine
 
-minetest.register_craft({
+core.register_craft({
 		output = 'mymineshaft:machine',
 		recipe = {
 			{'default:sand', 'default:brick', 'default:sand'},

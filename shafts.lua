@@ -1,21 +1,21 @@
-minetest.register_alias("myshafts:minenode", "mymineshaft:minenode")
+core.register_alias("myshafts:minenode", "mymineshaft:minenode")
 ---[[
-minetest.register_abm({
+core.register_abm({
 	nodenames = {"mymineshaft:minenode"},
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local rand = math.random(1,14)
-		local schem = minetest.get_modpath("mymineshaft").."/schems/myshafts"..rand..".mts"
+		local schem = core.get_modpath("mymineshaft").."/schems/myshafts"..rand..".mts"
 		if rand <= 10 then
-			minetest.place_schematic({x=pos.x-3,y=pos.y,z=pos.z-3},schem,0, "air", true)
+			core.place_schematic({x=pos.x-3,y=pos.y,z=pos.z-3},schem,0, "air", true)
 		elseif rand >= 11 then
-			minetest.place_schematic({x=pos.x-3,y=pos.y-30,z=pos.z-3},schem,0, "air", true)
+			core.place_schematic({x=pos.x-3,y=pos.y-30,z=pos.z-3},schem,0, "air", true)
 		end
 	end,
 })
 --]]
-minetest.register_node("mymineshaft:minenode",{
+core.register_node("mymineshaft:minenode",{
 	description = "Minenode",
 	tiles = {"default_cobble.png^default_snowball.png"},
 	drawtype = "normal",
@@ -23,19 +23,19 @@ minetest.register_node("mymineshaft:minenode",{
 	light_source = 8,
 	groups = {cracky = 1, not_in_creative_inventory=1},
 })
-minetest.register_ore({
+core.register_ore({
 	ore_type       = "scatter",
 	ore            = "mymineshaft:minenode",
 	wherein        = "default:stone",
 	clust_scarcity = 80*80*80,
 	clust_num_ores = 1,
 	clust_size     = 1,
-	height_min     = -1000,
+	height_min     = -10000,
 	height_max     = -100,
 })
 
 local function coins(pos)
-  	minetest.add_particlespawner(50, 0.4,
+  	core.add_particlespawner(50, 0.4,
 		pos, pos,
 		{x=2, y=0.2, z=2}, {x=-2, y=2, z=-2},
 		{x=0, y=-6, z=0}, {x=0, y=-10, z=0},
@@ -43,7 +43,7 @@ local function coins(pos)
 		0.2, 5,
 		true, "mymineshaft_coin.png")
 end
-minetest.register_node("mymineshaft:cave3",{
+core.register_node("mymineshaft:cave3",{
 	description = "Mining Chest",
 	drawtype = "mesh",
 	mesh = "mymineshaft_chest.obj",

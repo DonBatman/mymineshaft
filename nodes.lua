@@ -54,7 +54,7 @@ local middlebox = {
 			}	
 		}
 
-minetest.register_node("mymineshaft:shaft_"..mat,{
+core.register_node("mymineshaft:shaft_"..mat,{
 	description = desc.." Shaft",
 	tiles = {image},
 	drawtype = "mesh",
@@ -67,7 +67,7 @@ minetest.register_node("mymineshaft:shaft_"..mat,{
 	selection_box = shaftbox,
 	collision_box = shaftbox,
 })
-minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
+core.register_node("mymineshaft:shaft_top_open_"..mat,{
 	description = desc.."Open Shaft Top",
 	tiles = {image},
 	drawtype = "mesh",
@@ -81,10 +81,10 @@ minetest.register_node("mymineshaft:shaft_top_open_"..mat,{
 	collision_box = shaftbox,
 	
 	on_punch = function(pos, node, clicker)
-		minetest.set_node(pos,{name = "mymineshaft:shaft_top_closed_"..mat})
+		core.set_node(pos,{name = "mymineshaft:shaft_top_closed_"..mat})
 	end,
 })
-minetest.register_node("mymineshaft:shaft_top_closed_"..mat,{
+core.register_node("mymineshaft:shaft_top_closed_"..mat,{
 	description = desc.." Closed Shaft Top",
 	tiles = {image},
 	drawtype = "mesh",
@@ -98,11 +98,11 @@ minetest.register_node("mymineshaft:shaft_top_closed_"..mat,{
 	collision_box = topboxc,
 
 	on_punch = function(pos, node, clicker)
-		minetest.set_node(pos,{name = "mymineshaft:shaft_top_open_"..mat})
+		core.set_node(pos,{name = "mymineshaft:shaft_top_open_"..mat})
 	end,
 })
 
-minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
+core.register_node("mymineshaft:shaft_bottom_"..mat,{
 	description = desc.." Shaft Bottom",
 	tiles = {image},
 	drawtype = "mesh",
@@ -119,22 +119,22 @@ minetest.register_node("mymineshaft:shaft_bottom_"..mat,{
 
     on_place = function(itemstack, placer, pointed_thing)
         local pos = pointed_thing.above
-        if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
-            minetest.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
+        if core.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
+            core.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
             return
         end
-        return minetest.item_place(itemstack, placer, pointed_thing)
+        return core.item_place(itemstack, placer, pointed_thing)
     end,
 
 	after_place_node = function(pos)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:shaft_bottom2_"..mat})
+		core.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:shaft_bottom2_"..mat})
 	end,
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+		core.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
 	end
 })
 
-minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
+core.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	description = desc.." Shaft Bottom 2",
 	tiles = {image},
 	drawtype = "mesh",
@@ -150,11 +150,11 @@ minetest.register_node("mymineshaft:shaft_bottom2_"..mat,{
 	collision_box = bottombox2,
 
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
+		core.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
 	end
 })
 
-minetest.register_node("mymineshaft:shaft_middle_"..mat,{
+core.register_node("mymineshaft:shaft_middle_"..mat,{
 	description = desc.." Shaft Middle",
 	tiles = {image},
 	drawtype = "mesh",
@@ -170,23 +170,23 @@ minetest.register_node("mymineshaft:shaft_middle_"..mat,{
 
     on_place = function(itemstack, placer, pointed_thing)
         local pos = pointed_thing.above
-        if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
-            minetest.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
+        if core.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
+            core.chat_send_player( placer:get_player_name(), "Not enough space to place this!" )
             return
         end
-        return minetest.item_place(itemstack, placer, pointed_thing)
+        return core.item_place(itemstack, placer, pointed_thing)
     end,
 
 	after_place_node = function(pos)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:shaft_middle2_"..mat})
+		core.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "mymineshaft:shaft_middle2_"..mat})
 	end,
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
+		core.set_node({x = pos.x, y = pos.y + 1, z = pos.z},{name = "air"})
 	end
 
 })
 
-minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
+core.register_node("mymineshaft:shaft_middle2_"..mat,{
 	description = desc.." Shaft Middle 2",
 	tiles = {image},
 	drawtype = "mesh",
@@ -202,11 +202,11 @@ minetest.register_node("mymineshaft:shaft_middle2_"..mat,{
 	collision_box = bottombox2,
 
 	after_destruct = function(pos, oldnode)
-		minetest.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
+		core.set_node({x = pos.x, y = pos.y - 1, z = pos.z},{name = "air"})
 	end
 })
 
-minetest.register_node("mymineshaft:shaft_bigshaft_"..mat,{
+core.register_node("mymineshaft:shaft_bigshaft_"..mat,{
 	description = desc.." Shaft Middle 2",
 	tiles = {image},
 	drawtype = "mesh",
