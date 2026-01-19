@@ -221,6 +221,18 @@ core.register_node("mymineshaft:shaft_bigshaft_"..mat,{
 	selection_box = shaftbox,
 	collision_box = shaftbox,
 })
+
+if core.get_modpath("lucky_block") then
+	lucky_block:add_blocks({
+		{"dro", {"mymineshaft:shaft_"..mat}, 99},
+		{"dro", {"mymineshaft:shaft_top_closed_"..mat}, 2},
+		{"dro", {"mymineshaft:shaft_bottom_"..mat}, 10},
+		{"dro", {"mymineshaft:shaft_middle_"..mat}, 10},
+		{"dro", {"mymineshaft:shaft_bigshaft_"..mat}, 10},
+		{"dro", {"mymineshaft:machine"}, 1},
+	})
+end
+
 end
 
 
