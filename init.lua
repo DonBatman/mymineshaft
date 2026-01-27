@@ -4,6 +4,7 @@ mymineshaft = {}
 dofile(core.get_modpath("mymineshaft").."/nodes.lua")
 dofile(core.get_modpath("mymineshaft").."/machine.lua")
 dofile(core.get_modpath("mymineshaft").."/register.lua")
+dofile(core.get_modpath("mymineshaft").."/finder.lua")
 if mines then
 dofile(core.get_modpath("mymineshaft").."/shafts.lua")
 end
